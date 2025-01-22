@@ -1,4 +1,6 @@
-﻿namespace ComicCollectorApp.Model
+﻿using ComicCollectorApp.Model.Comics;
+
+namespace ComicCollectorApp.Model
 {
     /// <summary>
     /// Хранит данные об авторе.

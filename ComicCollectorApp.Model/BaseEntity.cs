@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComicCollectorApp.Model.Comics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,12 @@ namespace ComicCollectorApp.Model
         /// Имя.
         /// </summary>
         private string _name;
+
+        /// <summary>
+        /// Возвращает и задает коллекцию комиксов,
+        /// связанных с данным объектом.
+        /// </summary>
+        public ICollection<Comic> Comics { get; set; }
 
         /// <summary>
         /// Возвращает и задает уникальный идентификатор

@@ -13,7 +13,7 @@
         /// <summary>
         /// Номер версии печати.
         /// </summary>
-        private int _printVersion;
+        private int _numberPrintVersion;
 
         /// <summary>
         /// Признак "ключевого" выпуска.
@@ -42,18 +42,18 @@
         /// <summary>
         /// Возвращает и задает номер версии печати.
         /// </summary>
-        public int PrintVersion
+        public int NumberPrintVersion
         {
             get
             {
-                return _printVersion;
+                return _numberPrintVersion;
             }
             set
             {
-                if (value != _printVersion)
+                if (value != _numberPrintVersion)
                 {
-                    _printVersion = value;
-                    OnPropertyChanged(nameof(PrintVersion));
+                    _numberPrintVersion = value;
+                    OnPropertyChanged(nameof(NumberPrintVersion));
                 }
             }
         }
@@ -107,7 +107,7 @@
                   author, language, typeComic)
         {
             IssueNumber = issueNumber;
-            PrintVersion = printVersion;
+            NumberPrintVersion = printVersion;
             IsKeyIssue = isKeyIssue;
 
             _id = _allComicsCount++;

@@ -5,8 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComicCollectorApp.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Comic Collector" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <DockPanel Grid.Row="0" Margin="0 0 0 10">
+            <TextBox Width="300" Margin="0 0 10 0" 
+                         VerticalAlignment="Center"/>
+            <ComboBox Width="150" Margin="0 0 10 0" 
+                          VerticalAlignment="Center" 
+                          ItemsSource="{Binding Filters}" 
+                          SelectedItem="{Binding SelectedFilter}" />
+        </DockPanel>
+
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding Comics}" 
+                      SelectedItem="{Binding SelectedComic}" 
+                      Margin="0 0 0 10" 
+                      IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Image" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding ImagePath}" Width="80" Height="80" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
+                <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="100"/>
+                <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Add" Width="100" Margin="5"/>
+            <Button Content="Edit" Width="100" Margin="5"/>
+            <Button Content="Delete" Width="100" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>

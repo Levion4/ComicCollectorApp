@@ -25,7 +25,7 @@ namespace ComicCollectorApp.Model.Comics
         /// <summary>
         /// Признак варинтной обложки комикса.
         /// </summary>
-        private bool _variantCover;
+        private bool _isVariantCover;
 
         /// <summary>
         /// Издатель комикса.
@@ -134,18 +134,18 @@ namespace ComicCollectorApp.Model.Comics
         /// <summary>
         /// Возвращает и задает признак вариантной обложки комикса.
         /// </summary>
-        public bool VariantСover
+        public bool IsVariantСover
         { 
             get
             {
-                return _variantCover;
+                return _isVariantCover;
             }
             set
             {
-                if (value != _variantCover)
+                if (value != _isVariantCover)
                 {
-                    _variantCover = value;
-                    OnPropertyChanged(nameof(VariantСover));
+                    _isVariantCover = value;
+                    OnPropertyChanged(nameof(IsVariantСover));
                 }
             }
         }
@@ -252,7 +252,7 @@ namespace ComicCollectorApp.Model.Comics
             Year = year;
             Title = title;
             Image = image;
-            _variantCover = variantCover;
+            _isVariantCover = variantCover;
             Publisher = publisher;
             Author = author;
             Language = language;
