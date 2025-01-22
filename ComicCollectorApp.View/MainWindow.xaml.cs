@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ComicCollectorApp.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,7 +19,13 @@ namespace ComicCollectorApp.View
     {
         public MainWindow()
         {
+
+        }
+
+        public MainWindow(MainViewModel viewModel)
+        {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

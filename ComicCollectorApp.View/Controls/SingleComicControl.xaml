@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ComicCollectorApp.View.Controls"
+             xmlns:converter="clr-namespace:ComicCollectorApp.View.Converters"
              mc:Ignorable="d" d:DesignHeight="150" d:DesignWidth="230">
     <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolConverter"/>
+        <converter:ReverseBoolConverter x:Key="ReverseBoolConverter"/>
         <ControlTemplate x:Key="validationFailed">
             <StackPanel Orientation="Horizontal">
                 <Border BorderBrush="White" BorderThickness="2">
@@ -26,17 +29,19 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock Text="Issue number:" Margin="3"/>
-            <TextBox Margin="3" Text="{Binding Name, Mode=TwoWay,
+            <TextBox Margin="3" IsReadOnly="{Binding IsEdit, RelativeSource={RelativeSource AncestorType=local:SingleComicControl},
+                     Converter={StaticResource ReverseBoolConverter}}" Text="{Binding CurrentComic.IssueNumber, Mode=TwoWay,
                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource errorTextStyle}"
                      Validation.ErrorTemplate="{StaticResource validationFailed}"/>
             <TextBlock Text="Number print version:" Margin="3"/>
-            <TextBox Margin="3" Text="{Binding PhoneNumber, Mode=TwoWay,
+            <TextBox Margin="3" IsReadOnly="{Binding IsEdit, RelativeSource={RelativeSource AncestorType=local:SingleComicControl},
+                     Converter={StaticResource ReverseBoolConverter}}" Text="{Binding CurrentComic.NumberPrintVersion, Mode=TwoWay,
                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource errorTextStyle}"
                      Validation.ErrorTemplate="{StaticResource validationFailed}"/>
             <TextBlock Text="Is key issue:" Margin="3"/>
-            <CheckBox Margin="3" IsChecked="{Binding Email, Mode=TwoWay,
-                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                     Validation.ErrorTemplate="{StaticResource validationFailed}"/>
+            <CheckBox Margin="3" IsEnabled="{Binding IsEdit, RelativeSource={RelativeSource AncestorType=local:SingleComicControl},
+                     Converter={StaticResource ReverseBoolConverter}}" IsChecked="{Binding CurrentComic.IsKeyIssue, Mode=TwoWay,
+                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </StackPanel>
     </Grid>
 </UserControl>

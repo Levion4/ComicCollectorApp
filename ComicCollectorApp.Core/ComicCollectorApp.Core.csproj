@@ -7,13 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ComicCollectorApp.Core\ComicCollectorApp.Core.csproj" />
-    <ProjectReference Include="..\ComicCollectorApp.Model\ComicCollectorApp.Model.csproj" />
   </ItemGroup>
 
 </Project>

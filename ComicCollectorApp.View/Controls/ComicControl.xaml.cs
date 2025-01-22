@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ComicCollectorApp.View
+namespace ComicCollectorApp.View.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для ComicWindow.xaml
+    /// Логика взаимодействия для ComicControl.xaml
     /// </summary>
-    public partial class ComicWindow : Window
+    public partial class ComicControl : UserControl
     {
-        public ComicWindow()
+        public ComicControl()
         {
             InitializeComponent();
         }

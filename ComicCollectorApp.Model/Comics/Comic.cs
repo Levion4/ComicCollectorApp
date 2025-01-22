@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Xml.Linq;
 
 namespace ComicCollectorApp.Model.Comics
 {
     /// <summary>
     /// Хранит информацию о комиксе.
     /// </summary>
-    public class Comic : BaseModel
+    public class Comic : BaseModel, ICloneable
     {
         /// <summary>
         /// Год выпуска комикса.
@@ -227,6 +228,16 @@ namespace ComicCollectorApp.Model.Comics
         }
 
         /// <summary>
+        /// Создает клон экземпляра класса <see cref="Comic"/>.
+        /// </summary>
+        /// <returns>Возвращает клон экземпляра.</returns>
+        public object Clone()
+        {
+            return new Comic(Year, Title, Image, IsVariantСover,
+                Publisher, Author, Language, TypeComic);
+        }
+
+        /// <summary>
         /// Создает экземпляр класса <see cref="Comic"/>.
         /// </summary>
         public Comic()
@@ -252,7 +263,7 @@ namespace ComicCollectorApp.Model.Comics
             Year = year;
             Title = title;
             Image = image;
-            _isVariantCover = variantCover;
+            IsVariantСover = variantCover;
             Publisher = publisher;
             Author = author;
             Language = language;

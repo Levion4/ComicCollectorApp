@@ -78,6 +78,17 @@
         }
 
         /// <summary>
+        /// Создает клон экземпляра класса <see cref="Comic"/>.
+        /// </summary>
+        /// <returns>Возвращает клон экземпляра.</returns>
+        public object Clone()
+        {
+            return new ComicSingle(IssueNumber, NumberPrintVersion,
+                IsKeyIssue, Year, Title, Image, IsVariantСover,
+                Publisher, Author, Language, TypeComic);
+        }
+
+        /// <summary>
         /// Создает экземпляр класса <see cref="ComicSingle"/>.
         /// </summary>
         public ComicSingle()
@@ -89,7 +100,7 @@
         /// Создает экземпляр класса <see cref="ComicSingle"/>.
         /// </summary>
         /// <param name="issueNumber">Номер комикса в серии.</param>
-        /// <param name="printVersion">Номер версии печати.</param>
+        /// <param name="numberPrintVersion">Номер версии печати.</param>
         /// <param name="isKeyIssue">Признак "ключевого" комикса.</param>
         /// <param name="year">Год выпуска.</param>
         /// <param name="title">Название.</param>
@@ -99,7 +110,7 @@
         /// <param name="author">Автор.</param>
         /// <param name="language">Язык текста.</param>
         /// <param name="typeComic">Тип.</param>
-        public ComicSingle(int issueNumber, int printVersion,
+        public ComicSingle(int issueNumber, int numberPrintVersion,
             bool isKeyIssue, int year, string title, byte[] image,
             bool variantCover, Publisher publisher, Author author,
             Language language, TypeComic typeComic)
@@ -107,7 +118,7 @@
                   author, language, typeComic)
         {
             IssueNumber = issueNumber;
-            NumberPrintVersion = printVersion;
+            NumberPrintVersion = numberPrintVersion;
             IsKeyIssue = isKeyIssue;
 
             _id = _allComicsCount++;

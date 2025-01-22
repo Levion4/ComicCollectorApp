@@ -4,10 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.View", "ComicCollectorApp.View\ComicCollectorApp.View.csproj", "{BC1FE986-0304-43B1-9AE6-1F36A571A999}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98} = {96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.ViewModel", "ComicCollectorApp.ViewModel\ComicCollectorApp.ViewModel.csproj", "{542E278C-32E2-4CA2-874A-691C8949F49C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98} = {96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.Model", "ComicCollectorApp.Model\ComicCollectorApp.Model.csproj", "{271359C7-6F56-4EBA-94F7-9D19F2509DD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicCollectorApp.Core", "ComicCollectorApp.Core\ComicCollectorApp.Core.csproj", "{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,10 @@ Global
 		{271359C7-6F56-4EBA-94F7-9D19F2509DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{271359C7-6F56-4EBA-94F7-9D19F2509DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{271359C7-6F56-4EBA-94F7-9D19F2509DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

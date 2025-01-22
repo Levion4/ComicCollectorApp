@@ -20,6 +20,21 @@ namespace ComicCollectorApp.View.Controls
     /// </summary>
     public partial class SingleComicControl : UserControl
     {
+        /// <summary>
+        /// Хранит свойство зависимости возможности редактирования.
+        /// </summary>
+        public static readonly DependencyProperty IsEditProperty =
+            DependencyProperty.Register(nameof(IsEdit), typeof(bool),
+                typeof(SingleComicControl));
+
+        /// <summary>
+        /// Возвращает и задает возможность редактирования.
+        /// </summary>
+        public bool IsEdit
+        {
+            get => (bool)GetValue(IsEditProperty);
+            set => SetValue(IsEditProperty, value);
+        }
         public SingleComicControl()
         {
             InitializeComponent();
