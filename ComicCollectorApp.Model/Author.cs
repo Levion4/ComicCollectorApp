@@ -1,6 +1,4 @@
-﻿using ComicCollectorApp.Model.Comics;
-
-namespace ComicCollectorApp.Model
+﻿namespace ComicCollectorApp.Model
 {
     /// <summary>
     /// Хранит данные об авторе.
@@ -8,9 +6,17 @@ namespace ComicCollectorApp.Model
     public class Author : BaseEntity
     {
         /// <summary>
+        /// Счетчик всех существующих объектов авторов.
+        /// </summary>
+        private static int _authorCount;
+
+        /// <summary>
         /// Создает экземпляр класса <see cref="Author"/>.
         /// </summary>
         /// <param name="name">Полное имя автора.</param>
-        public Author(string name) : base(name) {}
+        public Author(string name) : base(name) 
+        {
+            _id = ++_authorCount;
+        }
     }
 }

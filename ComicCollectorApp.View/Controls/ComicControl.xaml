@@ -40,57 +40,82 @@
                 <Image Source="{Binding CurrentComic.Image, Converter={StaticResource ByteArrayToBitmapImageConverter}}" Stretch="Uniform" />
             </Border>
             <Button Content="Add photo"  Margin="0,10,0,0"
-                        Command="{Binding ParentContext.AddPhotoCommand,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl}}"
-                        Visibility="{Binding ParentContext.IsAvailable,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                        Converter={StaticResource BoolConverter}}"/>
+                    Command="{Binding ParentContext.AddPhotoCommand,
+                              RelativeSource={RelativeSource AncestorType=local:ComicControl}}"
+                    Visibility="{Binding ParentContext.IsAvailable,
+                                 RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                 Converter={StaticResource BoolConverter}}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Margin="8">
             
             <TextBlock Text="Id:" Margin="3"/>
-            <TextBox Margin="3" IsReadOnly="True" Text="{Binding Id, Mode=OneWay,
-                     UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Margin="3" IsReadOnly="True"
+                     Text="{Binding Id, Mode=OneWay,
+                            UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Type comic:" Margin="3"/>
+            <TextBox Margin="3" IsReadOnly="True" 
+                     Text="{Binding TypeComic, Mode=OneWay,
+                            UpdateSourceTrigger=PropertyChanged}"/>
             
             <TextBlock Text="Title:" Margin="3"/>
-            <TextBox Margin="3" IsReadOnly="{Binding IsEdit, RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                     Converter={StaticResource ReverseBoolConverter}}" Text="{Binding Title, Mode=TwoWay,
-                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource errorTextStyle}"
+            <TextBox Margin="3"
+                     IsReadOnly="{Binding IsEdit,
+                                  RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                  Converter={StaticResource ReverseBoolConverter}}"
+                     Text="{Binding Title, Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     Style="{StaticResource errorTextStyle}"
                      Validation.ErrorTemplate="{StaticResource validationFailed}"/>
-            
-            <TextBlock Text="Type comic:" Margin="3"/>
-            <ComboBox Margin="3" ItemsSource="{Binding ParentContext.ComicTypes,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl}}"
-                        SelectedItem="{Binding TypeComic, Mode=TwoWay,
-                        UpdateSourceTrigger=PropertyChanged}"
-                        IsEnabled="{Binding IsEdit,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
-            
+
             <TextBlock Text="Author:" Margin="3"/>
-            <ComboBox Margin="3"
-                        IsEnabled="{Binding IsEdit,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+            <TextBox Margin="3"
+                     IsReadOnly="{Binding IsEdit,
+                                  RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                  Converter={StaticResource ReverseBoolConverter}}"
+                     Text="{Binding Author.Name, Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     Style="{StaticResource errorTextStyle}"
+                     Validation.ErrorTemplate="{StaticResource validationFailed}"/>
            
             <TextBlock Text="Publisher:" Margin="3"/>
-            <ComboBox Margin="3"
-                        IsEnabled="{Binding IsEdit,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
-            
+            <TextBox Margin="3"
+                     IsReadOnly="{Binding IsEdit,
+                                  RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                  Converter={StaticResource ReverseBoolConverter}}"
+                     Text="{Binding Publisher.Name, Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     Style="{StaticResource errorTextStyle}"
+                     Validation.ErrorTemplate="{StaticResource validationFailed}"/>
+
+            <TextBlock Text="Year:" Margin="3"/>
+            <TextBox Margin="3"
+                     IsReadOnly="{Binding IsEdit,
+                                  RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                  Converter={StaticResource ReverseBoolConverter}}"
+                     Text="{Binding Year, Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     Style="{StaticResource errorTextStyle}"
+                     Validation.ErrorTemplate="{StaticResource validationFailed}"/>
+
             <TextBlock Text="Language:" Margin="3"/>
-            <ComboBox Margin="3" 
-                        IsEnabled="{Binding IsEdit,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+            <TextBox Margin="3" 
+                     IsReadOnly="{Binding IsEdit,
+                                  RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                  Converter={StaticResource ReverseBoolConverter}}"
+                     Text="{Binding Language.Name, Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     Style="{StaticResource errorTextStyle}"
+                     Validation.ErrorTemplate="{StaticResource validationFailed}"/>
             
             <TextBlock Text="Is variant cover:" Margin="3"/>
             <CheckBox Margin="3"
-                        IsEnabled="{Binding IsEdit,
-                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
-                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+                      IsEnabled="{Binding IsEdit,
+                                  RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                                  Converter={StaticResource BoolToIsEnabledConverter}}"
+                      IsChecked="{Binding IsVariantCover, Mode=TwoWay,
+                                  UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -19,7 +19,6 @@ namespace ComicCollectorApp.View
     {
         public MainWindow()
         {
-
         }
 
         public MainWindow(MainViewModel viewModel)

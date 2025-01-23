@@ -1,10 +1,25 @@
-﻿namespace ComicCollectorApp.Model.Comics
+﻿using ComicCollectorApp.Model.Services;
+using System.ComponentModel.DataAnnotations;
+
+namespace ComicCollectorApp.Model.Comics
 {
     /// <summary>
     /// Хранит данные о синглах.
     /// </summary>
     public class ComicSingle : Comic
     {
+        /// <summary>
+        /// Ограничение на количество символов
+        /// в номере версии печати.
+        /// </summary>
+        private readonly int _maxLengthNumberPrintVersion = 2;
+
+        /// <summary>
+        /// Ограничение на количество символов
+        /// в номере выпуска в серии.
+        /// </summary>
+        private readonly int _maxLengthIssueNumber = 10;
+
         /// <summary>
         /// Номер выпуска в серии.
         /// </summary>
@@ -34,6 +49,28 @@
                 if (value != _issueNumber)
                 {
                     _issueNumber = value;
+                    ClearError(nameof(IssueNumber));
+
+                    var error = ValueValidator.AssertStringOnLength(
+                        _issueNumber.ToString(),
+                        _maxLengthIssueNumber,
+                        nameof(IssueNumber));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(IssueNumber), error);
+                    }
+
+                    error = ValueValidator.AssertOnPositiveValue(
+                        _issueNumber,
+                        nameof(IssueNumber));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(IssueNumber), error);
+                    }
+
+                    OnPropertyChanged(nameof(HasErrors));
                     OnPropertyChanged(nameof(IssueNumber));
                 }
             } 
@@ -53,6 +90,28 @@
                 if (value != _numberPrintVersion)
                 {
                     _numberPrintVersion = value;
+                    ClearError(nameof(NumberPrintVersion));
+
+                    var error = ValueValidator.AssertStringOnLength(
+                        _numberPrintVersion.ToString(),
+                        _maxLengthNumberPrintVersion,
+                        nameof(NumberPrintVersion));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(NumberPrintVersion), error);
+                    }
+
+                    error = ValueValidator.AssertOnPositiveValue(
+                        _numberPrintVersion,
+                        nameof(NumberPrintVersion));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(NumberPrintVersion), error);
+                    }
+
+                    OnPropertyChanged(nameof(HasErrors));
                     OnPropertyChanged(nameof(NumberPrintVersion));
                 }
             }
@@ -85,7 +144,7 @@
         {
             return new ComicSingle(IssueNumber, NumberPrintVersion,
                 IsKeyIssue, Year, Title, Image, IsVariantСover,
-                Publisher, Author, Language, TypeComic);
+                Publisher, Author, Language);
         }
 
         /// <summary>
@@ -93,7 +152,10 @@
         /// </summary>
         public ComicSingle()
         {
-            TypeComic = TypeComic.Single;
+            Author = new Author("");
+            Publisher = new Publisher("");
+            Language = new Language("");
+            _typeComic = TypeComic.Single;
         }
 
         /// <summary>
@@ -109,19 +171,19 @@
         /// <param name="publisher">Издатель.</param>
         /// <param name="author">Автор.</param>
         /// <param name="language">Язык текста.</param>
-        /// <param name="typeComic">Тип.</param>
         public ComicSingle(int issueNumber, int numberPrintVersion,
             bool isKeyIssue, int year, string title, byte[] image,
             bool variantCover, Publisher publisher, Author author,
-            Language language, TypeComic typeComic)
+            Language language)
             : base(year, title, image, variantCover, publisher,
-                  author, language, typeComic)
+                  author, language)
         {
             IssueNumber = issueNumber;
             NumberPrintVersion = numberPrintVersion;
             IsKeyIssue = isKeyIssue;
 
             _id = _allComicsCount++;
+            _typeComic = TypeComic.Single;
         }
     }
 }

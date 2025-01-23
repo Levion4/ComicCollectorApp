@@ -1,5 +1,6 @@
-﻿using System.ComponentModel;
-using System.Xml.Linq;
+﻿using ComicCollectorApp.Model.Services;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ComicCollectorApp.Model.Comics
 {
@@ -8,6 +9,17 @@ namespace ComicCollectorApp.Model.Comics
     /// </summary>
     public class Comic : BaseModel, ICloneable
     {
+        /// <summary>
+        /// Ограничение на минимальное значение года комикса.
+        /// </summary>
+        private readonly int _minValueComicYear = 1896;
+
+        /// <summary>
+        /// Ограничение на количество символов
+        /// в названии комикса.
+        /// </summary>
+        private readonly int _maxLengthTitle = 150;
+
         /// <summary>
         /// Год выпуска комикса.
         /// </summary>
@@ -46,7 +58,7 @@ namespace ComicCollectorApp.Model.Comics
         /// <summary>
         /// Тип комикса.
         /// </summary>
-        private TypeComic _typeComic;
+        protected TypeComic _typeComic;
 
         /// <summary>
         /// Счетчик всех существующих объектов комиксов.
@@ -89,6 +101,20 @@ namespace ComicCollectorApp.Model.Comics
                 if (value != _year)
                 {
                     _year = value;
+                    ClearError(nameof(Year));
+
+                    var error = ValueValidator.AssertValueInRange(
+                        _year,
+                        _minValueComicYear,
+                        DateTime.Now.Year,
+                        nameof(Year));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(Year), error);
+                    }
+
+                    OnPropertyChanged(nameof(HasErrors));
                     OnPropertyChanged(nameof(Year));
                 }
             }
@@ -108,6 +134,19 @@ namespace ComicCollectorApp.Model.Comics
                 if (value != _title)
                 {
                     _title = value;
+                    ClearError(nameof(Title));
+
+                    var error = ValueValidator.AssertStringOnLength(
+                        _title.ToString(),
+                        _maxLengthTitle,
+                        nameof(Title));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(Title), error);
+                    }
+
+                    OnPropertyChanged(nameof(HasErrors));
                     OnPropertyChanged(nameof(Title));
                 }
             }
@@ -217,13 +256,9 @@ namespace ComicCollectorApp.Model.Comics
             {
                 return _typeComic;
             }
-            set
+            private set
             {
-                if (value != _typeComic)
-                {
-                    _typeComic = value;
-                    OnPropertyChanged(nameof(TypeComic));
-                }
+                _typeComic = value;
             }
         }
 
@@ -234,7 +269,7 @@ namespace ComicCollectorApp.Model.Comics
         public virtual object Clone()
         {
             return new Comic(Year, Title, Image, IsVariantСover,
-                Publisher, Author, Language, TypeComic);
+                Publisher, Author, Language);
         }
 
         /// <summary>
@@ -242,7 +277,11 @@ namespace ComicCollectorApp.Model.Comics
         /// </summary>
         public Comic()
         {
+            _typeComic = TypeComic.Collection;
             _id = _allComicsCount++;
+            _author = new Author("");
+            _publisher = new Publisher("");
+            _language = new Language("");
         }
 
         /// <summary>
@@ -251,14 +290,13 @@ namespace ComicCollectorApp.Model.Comics
         /// <param name="year">Год выпуска.</param>
         /// <param name="title">Название.</param>
         /// <param name="image">Фотография/картинка.</param>
-        /// <param name="variantCover">Признак варинтной обложки.</param>
+        /// <param name="variantCover">Признак вариантной обложки.</param>
         /// <param name="publisher">Издатель.</param>
         /// <param name="author">Автор.</param>
         /// <param name="language">Язык текста.</param>
-        /// <param name="typeComic">Тип.</param>
         public Comic(int year, string title, byte[] image,
             bool variantCover, Publisher publisher, Author author,
-            Language language, TypeComic typeComic)
+            Language language)
         {
             Year = year;
             Title = title;
@@ -267,8 +305,8 @@ namespace ComicCollectorApp.Model.Comics
             Publisher = publisher;
             Author = author;
             Language = language;
-            TypeComic = typeComic;
 
+            _typeComic = TypeComic.Collection;
             _id = _allComicsCount++;
         }
     }

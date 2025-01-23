@@ -18,15 +18,23 @@ namespace ComicCollectorApp.ViewModel
         private ObservableCollection<Comic> _comics = 
             new ObservableCollection<Comic>();
 
+        [ObservableProperty]
+        private ObservableCollection<Author> _authors =
+            new ObservableCollection<Author>();
+
+        [ObservableProperty]
+        private ObservableCollection<Language> _languages =
+            new ObservableCollection<Language>();
+
+        [ObservableProperty]
+        private ObservableCollection<Publisher> _publishers =
+            new ObservableCollection<Publisher>();
+
         private Comic _currentComic;
 
         private Comic _cloneComic;
 
         private Comic _initialComic;
-
-        private Comic _cloneComicSingle;
-
-        private Comic _initialComicSingle;
 
         /// <summary/>
         /// Отвечает за доступность элементов.
@@ -39,11 +47,6 @@ namespace ComicCollectorApp.ViewModel
         /// </summary>
         [ObservableProperty]
         private bool _isAvailableSingleComic = false;
-
-        public IEnumerable<TypeComic> ComicTypes =>
-            Enum.GetValues(typeof(TypeComic))
-            .Cast<TypeComic>();
-            //.Where(type => type != TypeComic.Single);
 
         /// <summary>
         /// Возвращает и задает текущий комикс.
@@ -89,6 +92,13 @@ namespace ComicCollectorApp.ViewModel
 
             if (!Comics.Contains(CurrentComic))
             {
+                CurrentComic.Author = 
+                    EnsureUnique(Authors, CurrentComic.Author);
+                CurrentComic.Language = 
+                    EnsureUnique(Languages, CurrentComic.Language);
+                CurrentComic.Publisher = 
+                    EnsureUnique(Publishers, CurrentComic.Publisher);
+
                 Comics.Add(CurrentComic);
                 return;
             }
@@ -158,7 +168,6 @@ namespace ComicCollectorApp.ViewModel
         {
             CurrentComic = null;
             CurrentComic = new Comic();
-            //CurrentComic.TypeComic = ComicTypes.FirstOrDefault();
             IsAvailable = true;
             IsAvailableSingleComic = false;
         }
@@ -181,11 +190,22 @@ namespace ComicCollectorApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// Создает экземпляр класса <see cref="MainViewModel"/>
+        /// с предоставленным сервисом диалогов файлов.
+        /// </summary>
+        /// <param name="fileDialogService">
+        /// Интерфейс сервиса для работы с файловыми диалогами.
+        /// </param>
         public MainViewModel(IFileDialogService fileDialogService)
         {
             _fileDialogService = fileDialogService;
         }
 
+        /// <summary>
+        /// Создает экземпляр класса <see cref="MainViewModel"/>
+        /// с зависимостями по умолчанию. 
+        /// </summary>
         public MainViewModel()
         { 
         }
@@ -203,6 +223,33 @@ namespace ComicCollectorApp.ViewModel
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Проверяет, существует ли элемент с таким же именем в коллекции.
+        /// Если элемент найден, возвращает его. Если не найден,
+        /// добавляет новый элемент в коллекцию.
+        /// </summary>
+        /// <typeparam name="T">Тип элемента
+        /// коллекции.</typeparam>
+        /// <param name="collection">Коллекция
+        /// для проверки уникальности.</param>
+        /// <param name="newItem">Элемент,
+        /// который нужно проверить и добавить при отсутствии.</param>
+        /// <returns>Существующий элемент или добавленный новый.</returns>
+        private T EnsureUnique<T>(ICollection<T> collection, T newItem) where T : class
+        {
+            var existingItem = collection.FirstOrDefault(item =>
+                item.GetType().GetProperty("Name")?.GetValue(item)?.ToString() ==
+                newItem.GetType().GetProperty("Name")?.GetValue(newItem)?.ToString());
+
+            if (existingItem != null)
+            {
+                return existingItem;
+            }
+
+            collection.Add(newItem);
+            return newItem;
         }
     }
 }

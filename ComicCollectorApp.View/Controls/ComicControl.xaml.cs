@@ -27,6 +27,9 @@ namespace ComicCollectorApp.View.Controls
             DependencyProperty.Register(nameof(IsEdit), typeof(bool),
                 typeof(ComicControl));
 
+        /// <summary>
+        /// Хранит свойство зависимости родительского контекста данных.
+        /// </summary>
         public static readonly DependencyProperty ParentContextProperty =
             DependencyProperty.Register(nameof(ParentContext), typeof(object),
                 typeof(ComicControl), new PropertyMetadata(null));
@@ -40,6 +43,9 @@ namespace ComicCollectorApp.View.Controls
             set => SetValue(IsEditProperty, value);
         }
 
+        /// <summary>
+        /// Возвращает и задает родительский контекст данных.
+        /// </summary>
         public object ParentContext
         {
             get => GetValue(ParentContextProperty);

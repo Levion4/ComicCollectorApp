@@ -6,8 +6,6 @@
     public enum TypeComic
     {
         Single,
-        Hardcover,
-        TPB,
-        Omnibus
+        Collection
     }
 }

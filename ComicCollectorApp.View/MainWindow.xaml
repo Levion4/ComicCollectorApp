@@ -14,28 +14,45 @@
         <converter:ReverseBoolConverter x:Key="ReverseBoolConverter"/>
         <converter:ByteArrayToBitmapImageConverter x:Key="ByteArrayToBitmapImageConverter"/>
         <DataTemplate x:Key="comicTemplate">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <Rectangle Width="90" Height="120" Margin="3">
+            <Border Margin="10" Background="White" Padding="10" BorderThickness="1" BorderBrush="Gray" CornerRadius="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle Width="90" Height="120" Margin="5" Grid.Column="0">
                         <Rectangle.Fill>
                             <ImageBrush ImageSource="{Binding Image}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                </StackPanel>
-                <StackPanel Margin="3" Grid.Column="1">
-                    <TextBlock
-                        FontSize="12"
-                        FontWeight="SemiBold"
-                        Text="{Binding Title}"/>
-                    <TextBlock
-                        FontSize="10"
-                        Text="{Binding TypeComic}"/>
-                </StackPanel>
-            </Grid>
+
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock
+                            FontSize="26"
+                            FontWeight="SemiBold"
+                            Foreground="DarkBlue"
+                            Text="{Binding Title}" 
+                            Margin="0,0,0,10"/>
+                        <TextBlock
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            Text="{Binding TypeComic}"
+                            Margin="0,0,0,5"/>
+                        <TextBlock
+                            FontSize="18"
+                            Foreground="Gray"
+                            Text="{Binding Publisher.Name}"
+                            Margin="0,0,0,5"/>
+                        <TextBlock
+                            FontSize="18"
+                            Foreground="Gray"
+                            Text="{Binding Language.Name}"
+                            Margin="0,0,0,5"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </DataTemplate>
     </Window.Resources>
     <Grid>

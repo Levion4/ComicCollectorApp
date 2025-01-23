@@ -1,4 +1,5 @@
 ﻿using ComicCollectorApp.Model.Comics;
+using ComicCollectorApp.Model.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,25 @@ namespace ComicCollectorApp.Model
     /// <summary>
     /// Базовый класс для сущностей с идентификатором и именем.
     /// </summary>
-    public abstract class BaseEntity
+    public abstract class BaseEntity : BaseModel
     {
         /// <summary>
-        /// Счетчик всех существующих объектов данного класса.
+        /// Ограничение на количество символов
+        /// в имени объекта.
         /// </summary>
-        private static int _allEntitiesCount;
+        private readonly int _maxLenghtName = 150;
+
+        /// <summary>
+        /// Возвращает и задает счетчик всех существующих
+        /// объектов данного класса. Задает только во время инициализации.
+        /// </summary>
+        protected static int AllEntitiesCount { get; private set; }
 
         /// <summary>
         /// Уникальный идентификатор для всех объектов
         /// данного класса.
         /// </summary>
-        private int _id;
+        protected int _id;
 
         /// <summary>
         /// Имя.
@@ -64,6 +72,20 @@ namespace ComicCollectorApp.Model
                 if (value != _name)
                 {
                     _name = value;
+                    ClearError(nameof(Name));
+
+                    var error = ValueValidator.AssertStringOnLength(
+                        _name,
+                        _maxLenghtName,
+                        nameof(Name));
+
+                    if (error != null)
+                    {
+                        AddError(nameof(Name), error);
+                    }
+
+                    OnPropertyChanged(nameof(HasErrors));
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -75,7 +97,7 @@ namespace ComicCollectorApp.Model
         protected BaseEntity(string name)
         {
             Name = name;
-            Id = _allEntitiesCount++;
+            Id = ++AllEntitiesCount;
         }
     }
 }
