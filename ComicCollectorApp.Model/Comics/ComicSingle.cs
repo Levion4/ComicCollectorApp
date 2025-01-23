@@ -78,10 +78,10 @@
         }
 
         /// <summary>
-        /// Создает клон экземпляра класса <see cref="Comic"/>.
+        /// Создает клон экземпляра класса <see cref="ComicSingle"/>.
         /// </summary>
         /// <returns>Возвращает клон экземпляра.</returns>
-        public object Clone()
+        public override object Clone()
         {
             return new ComicSingle(IssueNumber, NumberPrintVersion,
                 IsKeyIssue, Year, Title, Image, IsVariantСover,
@@ -93,7 +93,7 @@
         /// </summary>
         public ComicSingle()
         {
-            _id = _allComicsCount++;
+            TypeComic = TypeComic.Single;
         }
 
         /// <summary>

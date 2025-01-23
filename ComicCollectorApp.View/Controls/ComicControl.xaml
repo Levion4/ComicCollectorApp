@@ -4,9 +4,93 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ComicCollectorApp.View.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:converter="clr-namespace:ComicCollectorApp.View.Converters"
+             mc:Ignorable="d" d:DesignHeight="380" d:DesignWidth="770">
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolConverter"/>
+        <converter:ReverseBoolConverter x:Key="ReverseBoolConverter"/>
+        <converter:ByteArrayToBitmapImageConverter x:Key="ByteArrayToBitmapImageConverter"/>
+        <converter:BoolToIsEnabledConverter x:Key="BoolToIsEnabledConverter" />
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="White" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+            </StackPanel>
+        </ControlTemplate>
+        <Style x:Key="errorTextStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},
+                        Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Background" Value="LightPink" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Border BorderBrush="Gray" BorderThickness="1" Width="200" Height="300" Margin="3, 25, 3, 3">
+                <Image Source="{Binding CurrentComic.Image, Converter={StaticResource ByteArrayToBitmapImageConverter}}" Stretch="Uniform" />
+            </Border>
+            <Button Content="Add photo"  Margin="0,10,0,0"
+                        Command="{Binding ParentContext.AddPhotoCommand,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl}}"
+                        Visibility="{Binding ParentContext.IsAvailable,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                        Converter={StaticResource BoolConverter}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="8">
             
+            <TextBlock Text="Id:" Margin="3"/>
+            <TextBox Margin="3" IsReadOnly="True" Text="{Binding Id, Mode=OneWay,
+                     UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <TextBlock Text="Title:" Margin="3"/>
+            <TextBox Margin="3" IsReadOnly="{Binding IsEdit, RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                     Converter={StaticResource ReverseBoolConverter}}" Text="{Binding Title, Mode=TwoWay,
+                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource errorTextStyle}"
+                     Validation.ErrorTemplate="{StaticResource validationFailed}"/>
+            
+            <TextBlock Text="Type comic:" Margin="3"/>
+            <ComboBox Margin="3" ItemsSource="{Binding ParentContext.ComicTypes,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl}}"
+                        SelectedItem="{Binding TypeComic, Mode=TwoWay,
+                        UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="{Binding IsEdit,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+            
+            <TextBlock Text="Author:" Margin="3"/>
+            <ComboBox Margin="3"
+                        IsEnabled="{Binding IsEdit,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+           
+            <TextBlock Text="Publisher:" Margin="3"/>
+            <ComboBox Margin="3"
+                        IsEnabled="{Binding IsEdit,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+            
+            <TextBlock Text="Language:" Margin="3"/>
+            <ComboBox Margin="3" 
+                        IsEnabled="{Binding IsEdit,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+            
+            <TextBlock Text="Is variant cover:" Margin="3"/>
+            <CheckBox Margin="3"
+                        IsEnabled="{Binding IsEdit,
+                        RelativeSource={RelativeSource AncestorType=local:ComicControl},
+                        Converter={StaticResource BoolToIsEnabledConverter}}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

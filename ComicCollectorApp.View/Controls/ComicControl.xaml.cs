@@ -20,6 +20,32 @@ namespace ComicCollectorApp.View.Controls
     /// </summary>
     public partial class ComicControl : UserControl
     {
+        /// <summary>
+        /// Хранит свойство зависимости возможности редактирования.
+        /// </summary>
+        public static readonly DependencyProperty IsEditProperty =
+            DependencyProperty.Register(nameof(IsEdit), typeof(bool),
+                typeof(ComicControl));
+
+        public static readonly DependencyProperty ParentContextProperty =
+            DependencyProperty.Register(nameof(ParentContext), typeof(object),
+                typeof(ComicControl), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Возвращает и задает возможность редактирования.
+        /// </summary>
+        public bool IsEdit
+        {
+            get => (bool)GetValue(IsEditProperty);
+            set => SetValue(IsEditProperty, value);
+        }
+
+        public object ParentContext
+        {
+            get => GetValue(ParentContextProperty);
+            set => SetValue(ParentContextProperty, value);
+        }
+
         public ComicControl()
         {
             InitializeComponent();

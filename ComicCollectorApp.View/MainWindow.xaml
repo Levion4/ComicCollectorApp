@@ -8,7 +8,7 @@
         xmlns:converter="clr-namespace:ComicCollectorApp.View.Converters"
         d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
-        Title="Comic Collector" Height="600" Width="1200">
+        Title="Comic Collector" Height="650" Width="1200">
     <Window.Resources>
         <converter:BoolToVisibilityConverter x:Key="BoolConverter"/>
         <converter:ReverseBoolConverter x:Key="ReverseBoolConverter"/>
@@ -20,27 +20,27 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <Ellipse Width="30" Height="30" Margin="3, 3, 3, 3">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding CurrentComic.Image}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                    <Rectangle Width="90" Height="120" Margin="3">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="{Binding Image}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
                 </StackPanel>
                 <StackPanel Margin="3" Grid.Column="1">
                     <TextBlock
                         FontSize="12"
                         FontWeight="SemiBold"
-                        Text="{Binding CurrentComic.Title}"/>
+                        Text="{Binding Title}"/>
                     <TextBlock
                         FontSize="10"
-                        Text="{Binding CurrentComic.TypeComic}"/>
+                        Text="{Binding TypeComic}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.6*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -74,14 +74,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Add" Grid.Column="0" Height="25" Width="Auto" Margin="3"
-                        Command="{Binding AddCommand}" IsEnabled="{Binding IsAvailable,
+                <Button Content="Add a single" Grid.Column="0" Height="25" Width="Auto" Margin="3"
+                        Command="{Binding AddSingleCommand}" IsEnabled="{Binding IsAvailable,
                         Converter={StaticResource ReverseBoolConverter}}"/>
-                <Button Content="Edit" Grid.Column="1" Height="25" Width="Auto" Margin="3"
+                <Button Content="Add a collection" Grid.Column="1" Height="25" Width="Auto" Margin="3"
+                        Command="{Binding AddCollectionCommand}" IsEnabled="{Binding IsAvailable,
+                        Converter={StaticResource ReverseBoolConverter}}"/>
+                <Button Content="Edit" Grid.Column="2" Height="25" Width="Auto" Margin="3"
                         Command="{Binding EditCommand}" IsEnabled="{Binding IsAvailable,
                         Converter={StaticResource ReverseBoolConverter}}"/>
-                <Button Content="Remove" Grid.Column="2" Height="25" Width="Auto" Margin="3"
+                <Button Content="Remove" Grid.Column="3" Height="25" Width="Auto" Margin="3"
                         Command="{Binding RemoveCommand}" IsEnabled="{Binding IsAvailable,
                         Converter={StaticResource ReverseBoolConverter}}"/>
             </Grid>
@@ -100,32 +104,28 @@
                 <Border BorderBrush="Gray" BorderThickness="1" Width="200" Height="300" Margin="3, 25, 3, 3">
                     <Image Source="{Binding CurrentComic.Image, Converter={StaticResource ByteArrayToBitmapImageConverter}}" Stretch="Uniform" />
                 </Border>
-                <Button Content="Add photo" Command="{Binding AddPhotoCommand}" Margin="0,10,0,0" />
+                <Button Content="Add photo" Command="{Binding AddPhotoCommand}" Margin="0,10,0,0"
+                        Visibility="{Binding IsAvailable, Converter={StaticResource BoolConverter}}"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
-                <TextBlock Text="Id:" Margin="3"/>
-                <TextBox Margin="3"/>
-                <TextBlock Text="Title:" Margin="3"/>
-                <TextBox Margin="3"/>
-                <TextBlock Text="Type comic:" Margin="3"/>
-                <ComboBox Margin="3"/>
-                <TextBlock Text="Author:" Margin="3"/>
-                <ComboBox Margin="3"/>
-                <TextBlock Text="Publisher:" Margin="3"/>
-                <ComboBox Margin="3"/>
-                <TextBlock Text="Language:" Margin="3"/>
-                <ComboBox Margin="3"/>
-                <TextBlock Text="Is variant cover:" Margin="3"/>
-                <CheckBox Margin="3"/>
-            </StackPanel>
-            
-            <control:SingleComicControl DataContext="{Binding CurrentComic}"
-                                        IsEdit="{Binding DataContext.IsAvailable, 
-                                        RelativeSource={RelativeSource AncestorType=Window},
-                                        UpdateSourceTrigger=PropertyChanged}"
-                                        Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
-                                        Margin="0,20,0,0"/>
+            <control:ComicControl 
+                     DataContext="{Binding CurrentComic}"
+                     ParentContext="{Binding DataContext, 
+                     RelativeSource={RelativeSource AncestorType=Window}}"
+                     IsEdit="{Binding DataContext.IsAvailable, 
+                     RelativeSource={RelativeSource AncestorType=Window},
+                     UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                     HorizontalAlignment="Stretch"/>
+
+            <control:SingleComicControl
+                     DataContext="{Binding CurrentComic}"
+                     IsEdit="{Binding DataContext.IsAvailableSingleComic, 
+                     RelativeSource={RelativeSource AncestorType=Window},
+                     UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Stretch"
+                     Grid.Column="1" Grid.Row="1"
+                     Margin="0,20,0,0"/>
 
             <Button Content="Apply" Height="25" Width="75"
                     HorizontalAlignment="Center" Grid.Row="1"

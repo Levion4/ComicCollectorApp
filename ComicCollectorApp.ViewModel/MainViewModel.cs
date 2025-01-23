@@ -24,11 +24,26 @@ namespace ComicCollectorApp.ViewModel
 
         private Comic _initialComic;
 
+        private Comic _cloneComicSingle;
+
+        private Comic _initialComicSingle;
+
         /// <summary/>
         /// Отвечает за доступность элементов.
         /// </summary>
         [ObservableProperty]
         private bool _isAvailable = false;
+
+        /// <summary/>
+        /// Отвечает за доступность элементов комиксов типа "сингл".
+        /// </summary>
+        [ObservableProperty]
+        private bool _isAvailableSingleComic = false;
+
+        public IEnumerable<TypeComic> ComicTypes =>
+            Enum.GetValues(typeof(TypeComic))
+            .Cast<TypeComic>();
+            //.Where(type => type != TypeComic.Single);
 
         /// <summary>
         /// Возвращает и задает текущий комикс.
@@ -43,6 +58,7 @@ namespace ComicCollectorApp.ViewModel
             {
                 if (SetProperty(ref _currentComic, value))
                 {
+                    IsAvailableSingleComic = false;
                     IsAvailable = false;
                     RemoveCommand.NotifyCanExecuteChanged();
                     EditCommand.NotifyCanExecuteChanged();
@@ -59,6 +75,7 @@ namespace ComicCollectorApp.ViewModel
         private void Apply()
         {
             IsAvailable = false;
+            IsAvailableSingleComic = false;
 
             if (_cloneComic != null)
             {
@@ -117,18 +134,33 @@ namespace ComicCollectorApp.ViewModel
             if (CurrentComic != null && Comics.Count > 0)
             {
                 IsAvailable = true;
+                IsAvailableSingleComic = true;
             }
         }
 
         /// <summary>
-        /// Команда на добавление комикса.
+        /// Команда на добавление комикса сингла.
         /// </summary>
         [RelayCommand]
-        private void Add()
+        private void AddSingle()
+        {
+            CurrentComic = null;
+            CurrentComic = new ComicSingle();
+            IsAvailable = true;
+            IsAvailableSingleComic = true;
+        }
+
+        /// <summary>
+        /// Команда на добавление комикса сборника.
+        /// </summary>
+        [RelayCommand]
+        private void AddCollection()
         {
             CurrentComic = null;
             CurrentComic = new Comic();
+            //CurrentComic.TypeComic = ComicTypes.FirstOrDefault();
             IsAvailable = true;
+            IsAvailableSingleComic = false;
         }
 
         /// <summary>

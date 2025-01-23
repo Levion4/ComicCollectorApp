@@ -27,7 +27,7 @@ namespace ComicCollectorApp.View.Converters
             {
                 return Visibility.Visible;
             }
-
+            
             return Visibility.Hidden;
         }
 

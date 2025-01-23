@@ -231,7 +231,7 @@ namespace ComicCollectorApp.Model.Comics
         /// Создает клон экземпляра класса <see cref="Comic"/>.
         /// </summary>
         /// <returns>Возвращает клон экземпляра.</returns>
-        public object Clone()
+        public virtual object Clone()
         {
             return new Comic(Year, Title, Image, IsVariantСover,
                 Publisher, Author, Language, TypeComic);
