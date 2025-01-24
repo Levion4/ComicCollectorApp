@@ -1,7 +1,7 @@
 ﻿namespace ComicCollectorApp.Model
 {
     /// <summary>
-    /// Хранит данные об издательтве.
+    /// Хранит данные об издательстве.
     /// </summary>
     public class Publisher : BaseEntity
     {

@@ -1,5 +1,4 @@
 ﻿using ComicCollectorApp.Model.Services;
-using System.ComponentModel.DataAnnotations;
 
 namespace ComicCollectorApp.Model.Comics
 {
@@ -142,6 +141,7 @@ namespace ComicCollectorApp.Model.Comics
         /// <returns>Возвращает клон экземпляра.</returns>
         public override object Clone()
         {
+            _id = _allComicsCount--;
             return new ComicSingle(IssueNumber, NumberPrintVersion,
                 IsKeyIssue, Year, Title, Image, IsVariantСover,
                 Publisher, Author, Language);

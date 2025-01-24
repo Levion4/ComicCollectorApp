@@ -17,6 +17,11 @@ namespace ComicCollectorApp.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// ViewModel главного окна.
+        /// </summary>
+        private readonly MainViewModel _viewModel;
+
         public MainWindow()
         {
         }
@@ -24,7 +29,33 @@ namespace ComicCollectorApp.View
         public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
+            _viewModel = viewModel ?? 
+                throw new ArgumentNullException(nameof(viewModel));
             DataContext = viewModel;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                _viewModel.Save();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _viewModel.Load();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }

@@ -7,8 +7,8 @@
         xmlns:control="clr-namespace:ComicCollectorApp.View.Controls"
         xmlns:converter="clr-namespace:ComicCollectorApp.View.Converters"
         d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"
-        mc:Ignorable="d"
-        Title="Comic Collector" Height="650" Width="1200">
+        mc:Ignorable="d" Title="Comic Collector" Height="650" Width="1200"
+        Icon="Resources/Icon_MainWindow.png" Closed="Window_Closed" Loaded="Window_Loaded">
     <Window.Resources>
         <converter:BoolToVisibilityConverter x:Key="BoolConverter"/>
         <converter:ReverseBoolConverter x:Key="ReverseBoolConverter"/>

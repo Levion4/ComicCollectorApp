@@ -4,6 +4,7 @@ using ComicCollectorApp.Model;
 using System.Collections.ObjectModel;
 using ComicCollectorApp.Model.Comics;
 using ComicCollectorApp.Core.Services;
+using ComicCollectorApp.ViewModel.Services;
 
 namespace ComicCollectorApp.ViewModel
 {
@@ -12,28 +13,57 @@ namespace ComicCollectorApp.ViewModel
     /// </summary>
     public partial class MainViewModel : ObservableObject
     {
+        /// <summary>
+        /// Сервис для взаимодействия с файловыми диалогами.
+        /// </summary>
         private readonly IFileDialogService _fileDialogService;
 
+        /// <summary>
+        /// Коллекция комиксов.
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<Comic> _comics = 
             new ObservableCollection<Comic>();
 
+        /// <summary>
+        /// Коллекция авторов.
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<Author> _authors =
             new ObservableCollection<Author>();
 
+        /// <summary>
+        /// Коллекция языков.
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<Language> _languages =
             new ObservableCollection<Language>();
 
+        /// <summary>
+        /// Коллекция издательств.
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<Publisher> _publishers =
             new ObservableCollection<Publisher>();
 
+        /// <summary>
+        /// Данные приложения.
+        /// </summary>
+        private DataApp _dataApp;
+
+        /// <summary>
+        /// Текующий комикс.
+        /// </summary>
         private Comic _currentComic;
 
+        /// <summary>
+        /// Клон комикса.
+        /// </summary>
         private Comic _cloneComic;
 
+        /// <summary>
+        /// Изначальный комикс.
+        /// </summary>
         private Comic _initialComic;
 
         /// <summary/>
@@ -208,6 +238,30 @@ namespace ComicCollectorApp.ViewModel
         /// </summary>
         public MainViewModel()
         { 
+        }
+
+        /// <summary>
+        /// Сохраняет данные.
+        /// </summary>
+        public void Save()
+        {
+            _dataApp.Comics = Comics;
+            _dataApp.Authors = Authors;
+            _dataApp.Publishers = Publishers;
+            _dataApp.Languages = Languages;
+            DataAppSerializer.SaveToFile(_dataApp);
+        }
+
+        /// <summary>
+        /// Загружает данные.
+        /// </summary>
+        public void Load()
+        {
+            _dataApp = DataAppSerializer.LoadFromFile();
+            Comics = _dataApp.Comics;
+            Authors = _dataApp.Authors;
+            Publishers = _dataApp.Publishers;
+            Languages = _dataApp.Languages;
         }
 
         /// <summary>
