@@ -15,7 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.ViewModel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.Model", "ComicCollectorApp.Model\ComicCollectorApp.Model.csproj", "{271359C7-6F56-4EBA-94F7-9D19F2509DD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicCollectorApp.Core", "ComicCollectorApp.Core\ComicCollectorApp.Core.csproj", "{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.Core", "ComicCollectorApp.Core\ComicCollectorApp.Core.csproj", "{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComicCollectorApp.Tests", "ComicCollectorApp.Tests\ComicCollectorApp.Tests.csproj", "{6EC1E49A-D171-4770-BC0B-0E2C97D439A6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{271359C7-6F56-4EBA-94F7-9D19F2509DD1} = {271359C7-6F56-4EBA-94F7-9D19F2509DD1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,10 @@ Global
 		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96D63D3E-F7EF-41E3-A6D2-C333D22DFA98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EC1E49A-D171-4770-BC0B-0E2C97D439A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EC1E49A-D171-4770-BC0B-0E2C97D439A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EC1E49A-D171-4770-BC0B-0E2C97D439A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EC1E49A-D171-4770-BC0B-0E2C97D439A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

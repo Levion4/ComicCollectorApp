@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using ComicCollectorApp.Model;
+﻿using ComicCollectorApp.Model;
 using Newtonsoft.Json;
 
 namespace ComicCollectorApp.ViewModel.Services
