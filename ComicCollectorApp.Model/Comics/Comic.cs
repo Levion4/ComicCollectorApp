@@ -21,7 +21,7 @@ namespace ComicCollectorApp.Model.Comics
         /// <summary>
         /// Год выпуска комикса.
         /// </summary>
-        private int _year;
+        private int _year = DateTime.Now.Year;
 
         /// <summary>
         /// Название комикса.
